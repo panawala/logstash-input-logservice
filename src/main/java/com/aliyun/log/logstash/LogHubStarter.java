@@ -25,7 +25,7 @@ public class LogHubStarter {
                             BlockingQueue<Map<String, String>> queueCache,
                             String proxyHost, int proxyPort, String proxyUsername, String proxyPassword,
                             String proxyDomain, String proxyWorkstation,
-                            int fetchIntervalMillis, String query
+                            int fetchIntervalMillis, String processor
     ) throws LogHubClientWorkerException {
         if (worker != null) {
             throw new IllegalStateException("worker has already started");
@@ -66,8 +66,8 @@ public class LogHubStarter {
         if (fetchIntervalMillis > 0) {
             config.setFetchIntervalMillis(fetchIntervalMillis);
         }
-        if (query != null && !query.isEmpty()) {
-            config.setQuery(query);
+        if (processor != null && !processor.isEmpty()) {
+            config.setProcessor(processor);
         }
         worker = new ClientWorker(
                 new LogstashLogHubProcessorFactory(checkpointSecond, includeMeta, consumerGroup + "/" + consumer, queueCache, isStop),
